@@ -71,5 +71,5 @@ equations = {
 
 base_variables = ["C", "A", "G", "E"]
 
-generate_truth_table(equations, base_variables, final_expression="AG'E' + A'E + CAG + CAE' + CGE")
+generate_truth_table(equations, base_variables, final_expression="AG'E' + A'E + CAG")
 
