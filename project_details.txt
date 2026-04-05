@@ -1,0 +1,102 @@
+Project Details
+Project Name: SneakerVault
+Group 10
+Team Members:
+Awsaf Ahmad Kabir - AAK220007
+Giridhar Nair - GXN210004
+Rafael Tobar - RAT240001
+Lino Vega - LAV240000
+Shaikh Hamid - SHH220001
+Project Overview
+SneakerVault is a database-driven sneaker reselling management system designed to help
+independent sneaker resellers efficiently manage their inventory, purchases, sales, customers,
+and overall profitability.
+Problem Statement
+1. In what ways will your suggested database system solve the issue?
+Independent sneaker resellers often rely on Excel spreadsheets or manual record-keeping to
+track their business operations. An Excel document often becomes difficult to manage as the
+number of sneakers, customers, and transactions grows. Common issues include duplicate
+entries, inconsistent data formatting, lack of enforced relationships between data, difficulty
+generating reports, and increased risk of human error.
+2. Why would you need a database as opposed to an Excel document?
+A relational database system addresses these issues by enforcing structured relationships
+between tables through primary and foreign keys. Referential integrity ensures that a sale
+cannot exist without a corresponding inventory item and customer. Constraints reduce the risk
+of invalid or inconsistent data. Queries allow efficient generation of reports such as total profit,
+best-selling models, unsold inventory, and sales by platform. Additionally, a database supports
+multi-user access with controlled permissions, making it more suitable for a growing business
+than a simple spreadsheet.
+
+Target User
+1. Who will access the database?
+Independent sneaker resellers and small sneaker reselling businesses. These users purchase
+limited-edition sneakers from retail sources and resell them for profit through online
+marketplaces or local transactions. The system is designed to help them track inventory,
+manage customer information, and monitor financial performance.
+2. Who is going to manage the database?
+The database will be managed by the reseller or business owner, who will act as the
+administrator. In a slightly larger operation, employees may also access the system to add
+inventory, record sales, or update customer information, while the owner maintains
+administrative privileges.
+List of Relations
+The database will consist of multiple relations that capture the core components of the sneaker
+reselling business. At minimum, the following tables will be implemented:
+1. Sneaker
+Sneaker(SneakerID, Brand, Model, Colorway, ReleaseDate)
+SneakerID is the primary key. This table stores general information about each sneaker model.
+It does not represent individual physical items, but rather the product type.
+2. Inventory
+Inventory(ItemID, SneakerID, Size, Condition, PurchasePrice, PurchaseDate, Status)
+ItemID is the primary key. SneakerID is a foreign key referencing Sneaker(SneakerID).
+This table represents individual sneaker items owned by the reseller. The Status attribute
+indicates whether the item is Available, Sold, or Reserved. This structure allows multiple
+inventory entries for the same sneaker model in different sizes or conditions.
+3. Customer
+Customer(CustomerID, FirstName, LastName, Email, Phone)
+CustomerID is the primary key. This table stores customer information for individuals who
+purchase sneakers from the reseller.
+4. Sale
+Sale(SaleID, ItemID, CustomerID, SalePrice, SaleDate, Platform)
+
+SaleID is the primary key. ItemID is a foreign key referencing Inventory(ItemID). CustomerID is a
+foreign key referencing Customer(CustomerID).
+This table records completed transactions. The Platform attribute indicates where the sneaker
+was sold, such as StockX, eBay, GOAT, or Local.
+5. Supplier
+Supplier(SupplierID, Name, Type, ContactInfo)
+SupplierID is the primary key. This table stores information about where sneakers were
+originally purchased, such as Nike SNKRS, Adidas Confirmed, retail stores, or other resellers.
+6. Purchase
+Purchase(PurchaseID, ItemID, SupplierID, PurchasePrice, PurchaseDate)
+PurchaseID is the primary key. ItemID is a foreign key referencing Inventory(ItemID). SupplierID
+is a foreign key referencing Supplier(SupplierID).
+This table tracks the acquisition of inventory items and links them to suppliers.
+Web Interface
+The web interface will provide forms and dashboards that interact directly with the database.
+Each interface will consist of input forms that update the database and query pages that display
+results in tabular format. The design will focus on simplicity and usability.
+The main page will be an Admin Dashboard displaying key metrics such as total inventory
+count, number of items sold, total revenue, and total profit. This information will be generated
+using SQL queries.
+An Add Sneaker page will allow the user to enter new sneaker model information into the
+Sneaker table. A separate Add Inventory page will allow the user to add individual items,
+specifying size, condition, purchase price, and supplier.
+A Record Sale page will include a form where the user selects an available inventory item,
+chooses or creates a customer, enters the sale price and platform, and submits the transaction.
+Upon submission, the system will insert a new record into the Sale table and update the
+corresponding Inventory status to “Sold.”
+A Customer Management page will allow the user to add, edit, or search for customers. An
+Inventory Search page will enable filtering by brand, size, or status (Available or Sold). A
+Reports page will generate queries such as monthly profit, total sales by platform, and most
+profitable sneaker models.
+
+Data
+The database will be populated using a combination of manually created and publicly available
+data. Sneaker model information such as brand names, release dates, and colorways can be
+gathered from public sneaker release calendars and retailer websites. Initial inventory,
+customer, and transaction data will be generated to simulate a realistic small business
+environment.
+Expected Deliverables
+By the end of the project, the team expects to deliver a fully functional relational database with
+properly defined tables, primary and foreign keys, and constraints. The system will include a
+working web interface that supports data entry, updates, and querying.
