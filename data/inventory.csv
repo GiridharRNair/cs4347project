@@ -1,0 +1,10 @@
+ID,SneakerID,SupplierID,Size,Condition,Status,CustomerID
+401,101,201,9.0,New,Sold,301
+402,101,201,10.0,New,Available,
+403,102,204,10.5,New,Sold,302
+404,103,202,9.5,New,Reserved,303
+405,104,204,8.5,New,Available,
+406,105,203,9.0,Used,Sold,304
+407,106,201,10.0,New,Available,
+408,107,205,9.0,Used,Sold,305
+409,108,204,8.0,New,Sold,306

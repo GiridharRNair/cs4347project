@@ -1,0 +1,61 @@
+Initial Relations 
+
+Supplier(ID, Name, Type, ContactInfo)
+Sneaker(ID, Brand, Model, Colorway, ReleaseDate)
+Customer(ID, FirstName, LastName, Phone, Email)
+Inventory(ID, SneakerID, SupplierID, Size, Condition, Status, PurchasePrice, CustomerID)
+
+Functional Dependencies
+
+
+
+Supplier
+
+ID → Name, Type, ContactInfo
+Explanation: Each supplier is uniquely identified by ID, which determines all other supplier attributes.
+
+Sneaker
+
+ID → Brand, Model, Colorway, ReleaseDate
+Explanation: Each sneaker is uniquely identified by ID, and all descriptive attributes depend on it.
+
+Customer
+
+ID → FirstName, LastName, Phone, Email
+Explanation: ID uniquely identifies a customer and determines all personal/contact attributes.
+
+Inventory
+
+ID → SneakerID, SupplierID, Size, Condition, Status, PurchasePrice, CustomerID
+Explanation: ItemID uniquely identifies each inventory item and determines all attributes associated with that item.
+
+(SneakerID, Size, Condition) → PurchasePrice
+Explanation: Pricing is determined by the combination of sneaker type, size, and condition rather than by ItemID alone.
+
+First Normal Form (1NF)
+
+All relations satisfy 1NF. Every attribute contains only atomic values, there are no repeating groups, and each relation has a defined primary key.
+
+Second Normal Form (2NF) 
+
+All relations satisfy 2NF. All non-key attributes depend on the full primary key (a single-attribute key), so no partial dependencies exist. Therefore all relations are in 2NF.
+
+
+Third Normal Form (3NF)
+
+The schema is already in 1NF and 2NF. However, it is not in 3NF due to the transitive dependency in the Inventory table.
+
+ID → SneakerID, Size, Condition    (via the primary key) 
+(SneakerID, Size, Condition) → PurchasePrice    (non-key set determines PurchasePrice)
+Therefore, ID → (transitively) → PurchasePrice
+
+
+To eliminate transitive dependency, PurchasePrice is separated into its own relation.
+
+Final Relations
+
+Supplier(ID, Name, Type, ContactInfo)
+Inventory(ID, SneakerID, SupplierID, Size, Condition, Status, CustomerID)
+Sneaker(ID, Brand, Model, Colorway, ReleaseDate)
+Customer(ID, Phone, FirstName, LastName, Email)
+PurchasePrice(SneakerID, Size, Condition, PurchasePrice)
