@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SneakerVault - Customer Management</title>
+</head>
+<body>
+  <header>
+    <h1>SneakerVault</h1>
+    <h2>Customer Management</h2>
+    <nav>
+      <a href="index.html">Dashboard</a> |
+      <a href="add_sneaker.html">Add Sneaker</a> |
+      <a href="add_inventory.html">Add Inventory</a> |
+      <a href="supplier_management.html">Supplier Management</a> |
+      <a href="record_sale.html">Record Sale</a> |
+      <a href="customer_management.html">Customer Management</a> |
+      <a href="inventory_search.html">Inventory Search</a> |
+      <a href="reports.html">Reports</a>
+    </nav>
+    <hr />
+  </header>
+
+  <main>
+    <section>
+      <h3>Add / Edit Customer</h3>
+      <form action="#" method="post">
+        <label for="customerId">Customer ID:</label><br />
+        <input type="number" min="1" id="customerId" name="customerId" required /><br /><br />
+
+        <label for="firstName">First Name:</label><br />
+        <input type="text" id="firstName" name="firstName" required /><br /><br />
+
+        <label for="lastName">Last Name:</label><br />
+        <input type="text" id="lastName" name="lastName" required /><br /><br />
+
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" /><br /><br />
+
+        <label for="phone">Phone:</label><br />
+        <input type="tel" id="phone" name="phone" /><br /><br />
+
+        <button type="submit">Save Customer</button>
+        <button type="reset">Clear</button>
+      </form>
+    </section>
+
+    <hr />
+
+    <section>
+      <h3>Search Customers</h3>
+      <form action="#" method="get">
+        <label for="searchName">Name:</label>
+        <input type="text" id="searchName" name="searchName" />
+
+        <label for="searchEmail">Email:</label>
+        <input type="text" id="searchEmail" name="searchEmail" />
+
+        <button type="submit">Search</button>
+      </form>
+
+      <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Customer ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="5">Search results will be displayed here after database integration.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

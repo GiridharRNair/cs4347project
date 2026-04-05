@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SneakerVault - Add Sneaker</title>
+</head>
+<body>
+  <header>
+    <h1>SneakerVault</h1>
+    <h2>Add Sneaker</h2>
+    <nav>
+      <a href="index.html">Dashboard</a> |
+      <a href="add_sneaker.html">Add Sneaker</a> |
+      <a href="add_inventory.html">Add Inventory</a> |
+      <a href="supplier_management.html">Supplier Management</a> |
+      <a href="record_sale.html">Record Sale</a> |
+      <a href="customer_management.html">Customer Management</a> |
+      <a href="inventory_search.html">Inventory Search</a> |
+      <a href="reports.html">Reports</a>
+    </nav>
+    <hr />
+  </header>
+
+  <main>
+    <form action="#" method="post">
+      <label for="sneakerId">Sneaker ID:</label><br />
+      <input type="number" min="1" id="sneakerId" name="sneakerId" required /><br /><br />
+
+      <label for="brand">Brand:</label><br />
+      <input type="text" id="brand" name="brand" required /><br /><br />
+
+      <label for="model">Model:</label><br />
+      <input type="text" id="model" name="model" required /><br /><br />
+
+      <label for="colorway">Colorway:</label><br />
+      <input type="text" id="colorway" name="colorway" /><br /><br />
+
+      <label for="releaseDate">Release Date:</label><br />
+      <input type="date" id="releaseDate" name="releaseDate" /><br /><br />
+
+      <button type="submit">Add Sneaker</button>
+      <button type="reset">Clear</button>
+    </form>
+
+    <p><strong>Note:</strong> Form submission will be connected to the database in a later phase.</p>
+  </main>
+</body>
+</html>
