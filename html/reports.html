@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SneakerVault - Reports</title>
+  <script src="app.js" defer></script>
 </head>
 <body>
   <header>
@@ -23,20 +24,19 @@
   </header>
 
   <main>
+    <p id="message"></p>
     <section>
-      <h3>Monthly Profit</h3>
+      <h3>Inventory Status Breakdown</h3>
       <table border="1" cellpadding="8" cellspacing="0">
         <thead>
           <tr>
-            <th>Month</th>
-            <th>Total Revenue</th>
-            <th>Total Cost</th>
-            <th>Profit</th>
+            <th>Status</th>
+            <th>Count</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="statusBreakdownBody">
           <tr>
-            <td colspan="4">Report output will be populated from SQL query results later.</td>
+            <td colspan="2">Loading...</td>
           </tr>
         </tbody>
       </table>
@@ -45,18 +45,20 @@
     <hr />
 
     <section>
-      <h3>Total Sales by Platform</h3>
+      <h3>Supplier Inventory Activity</h3>
       <table border="1" cellpadding="8" cellspacing="0">
         <thead>
           <tr>
-            <th>Platform</th>
-            <th>Number of Sales</th>
-            <th>Total Revenue</th>
+            <th>Supplier ID</th>
+            <th>Name</th>
+            <th>Total Items</th>
+            <th>Available</th>
+            <th>Sold</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="supplierStockBody">
           <tr>
-            <td colspan="3">Report output will be populated from SQL query results later.</td>
+            <td colspan="5">Loading...</td>
           </tr>
         </tbody>
       </table>
@@ -65,25 +67,26 @@
     <hr />
 
     <section>
-      <h3>Most Profitable Sneaker Models</h3>
+      <h3>Most Sold Sneaker Models</h3>
       <table border="1" cellpadding="8" cellspacing="0">
         <thead>
           <tr>
             <th>Sneaker ID</th>
             <th>Brand</th>
             <th>Model</th>
-            <th>Total Profit</th>
+            <th>Sold Count</th>
+            <th>Total Cost Basis</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="soldByModelBody">
           <tr>
-            <td colspan="4">Report output will be populated from SQL query results later.</td>
+            <td colspan="5">Loading...</td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <p><strong>Note:</strong> These report tables are placeholders and will be dynamically filled after database connectivity is added.</p>
+
   </main>
 </body>
 </html>

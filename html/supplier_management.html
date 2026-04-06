@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SneakerVault - Supplier Management</title>
+  <script src="app.js" defer></script>
 </head>
 <body>
   <header>
@@ -23,20 +24,21 @@
   </header>
 
   <main>
+    <p id="message"></p>
     <section>
-      <h3>Add / Edit Supplier</h3>
-      <form action="#" method="post">
-        <label for="supplierId">Supplier ID:</label><br />
-        <input type="number" min="1" id="supplierId" name="supplierId" required /><br /><br />
+      <h3>Save Supplier</h3>
+      <form id="supplierSaveForm" action="#" method="post">
+        <label for="supplierId">Supplier ID (optional):</label><br />
+        <input type="number" min="1" id="supplierId" name="supplierId" placeholder="Leave blank to auto-generate" /><br /><br />
 
         <label for="name">Name:</label><br />
         <input type="text" id="name" name="name" required /><br /><br />
 
         <label for="type">Type:</label><br />
-        <input type="text" id="type" name="type" /><br /><br />
+        <input type="text" id="type" name="type" required /><br /><br />
 
         <label for="contactInfo">Contact Info:</label><br />
-        <input type="text" id="contactInfo" name="contactInfo" /><br /><br />
+        <input type="text" id="contactInfo" name="contactInfo" required /><br /><br />
 
         <button type="submit">Save Supplier</button>
         <button type="reset">Clear</button>
@@ -47,7 +49,7 @@
 
     <section>
       <h3>Search Suppliers</h3>
-      <form action="#" method="get">
+      <form id="supplierSearchForm" action="#" method="get">
         <label for="searchName">Name:</label>
         <input type="text" id="searchName" name="searchName" />
 
@@ -64,11 +66,12 @@
             <th>Name</th>
             <th>Type</th>
             <th>Contact Info</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="supplierBody">
           <tr>
-            <td colspan="4">Search results will be displayed here after database integration.</td>
+            <td colspan="5">Loading...</td>
           </tr>
         </tbody>
       </table>

@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SneakerVault - Add Sneaker</title>
+  <script src="app.js" defer></script>
 </head>
 <body>
   <header>
     <h1>SneakerVault</h1>
-    <h2>Add Sneaker</h2>
+    <h2>Add Sneaker Model</h2>
     <nav>
       <a href="index.html">Dashboard</a> |
       <a href="add_sneaker.html">Add Sneaker</a> |
@@ -23,9 +24,11 @@
   </header>
 
   <main>
-    <form action="#" method="post">
-      <label for="sneakerId">Sneaker ID:</label><br />
-      <input type="number" min="1" id="sneakerId" name="sneakerId" required /><br /><br />
+    <p id="message"></p>
+    <p>This page adds a sneaker model to the catalog. Use Add Inventory to add actual stock you own.</p>
+    <form id="addSneakerForm" action="#" method="post">
+      <label for="sneakerId">Sneaker ID (optional):</label><br />
+      <input type="number" min="1" id="sneakerId" name="sneakerId" placeholder="Leave blank to auto-generate" /><br /><br />
 
       <label for="brand">Brand:</label><br />
       <input type="text" id="brand" name="brand" required /><br /><br />
@@ -39,11 +42,28 @@
       <label for="releaseDate">Release Date:</label><br />
       <input type="date" id="releaseDate" name="releaseDate" /><br /><br />
 
-      <button type="submit">Add Sneaker</button>
+      <button type="submit">Save Sneaker Model</button>
       <button type="reset">Clear</button>
     </form>
 
-    <p><strong>Note:</strong> Form submission will be connected to the database in a later phase.</p>
+    <h3>Sneaker Models</h3>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Colorway</th>
+          <th>Release Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="sneakerBody">
+        <tr>
+          <td colspan="6">Sneaker query results will be shown here.</td>
+        </tr>
+      </tbody>
+    </table>
   </main>
 </body>
 </html>

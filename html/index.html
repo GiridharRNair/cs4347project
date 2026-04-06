@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SneakerVault - Admin Dashboard</title>
+  <script src="app.js" defer></script>
 </head>
 <body>
   <header>
@@ -23,12 +24,13 @@
   </header>
 
   <main>
+    <p id="message"></p>
     <section>
       <h3>Key Metrics</h3>
-      <p>Total Inventory Count: [Query result will appear here later]</p>
-      <p>Number of Items Sold: [Query result will appear here later]</p>
-      <p>Total Revenue: [Query result will appear here later]</p>
-      <p>Total Profit: [Query result will appear here later]</p>
+      <p>Total Inventory Count: <span id="metricTotalInventory">-</span></p>
+      <p>Number of Items Sold: <span id="metricItemsSold">-</span></p>
+      <p>Available Items: <span id="metricItemsAvailable">-</span></p>
+      <p>Cost of Sold Inventory: $<span id="metricSoldCost">-</span></p>
       <p><strong>Note:</strong> Metrics will be populated from database queries in a later phase.</p>
     </section>
 
@@ -41,9 +43,9 @@
             <th>Customer ID</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="recentSalesBody">
           <tr>
-            <td colspan="2">Query results will be displayed here after database integration.</td>
+            <td colspan="2">Loading...</td>
           </tr>
         </tbody>
       </table>

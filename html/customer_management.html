@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SneakerVault - Customer Management</title>
+  <script src="app.js" defer></script>
 </head>
 <body>
   <header>
@@ -23,11 +24,12 @@
   </header>
 
   <main>
+    <p id="message"></p>
     <section>
-      <h3>Add / Edit Customer</h3>
-      <form action="#" method="post">
-        <label for="customerId">Customer ID:</label><br />
-        <input type="number" min="1" id="customerId" name="customerId" required /><br /><br />
+      <h3>Save Customer</h3>
+      <form id="customerSaveForm" action="#" method="post">
+        <label for="customerId">Customer ID (optional):</label><br />
+        <input type="number" min="1" id="customerId" name="customerId" placeholder="Leave blank to auto-generate" /><br /><br />
 
         <label for="firstName">First Name:</label><br />
         <input type="text" id="firstName" name="firstName" required /><br /><br />
@@ -36,7 +38,7 @@
         <input type="text" id="lastName" name="lastName" required /><br /><br />
 
         <label for="email">Email:</label><br />
-        <input type="email" id="email" name="email" /><br /><br />
+        <input type="email" id="email" name="email" required /><br /><br />
 
         <label for="phone">Phone:</label><br />
         <input type="tel" id="phone" name="phone" /><br /><br />
@@ -50,7 +52,7 @@
 
     <section>
       <h3>Search Customers</h3>
-      <form action="#" method="get">
+      <form id="customerSearchForm" action="#" method="get">
         <label for="searchName">Name:</label>
         <input type="text" id="searchName" name="searchName" />
 
@@ -68,11 +70,12 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="customerBody">
           <tr>
-            <td colspan="5">Search results will be displayed here after database integration.</td>
+            <td colspan="6">Loading...</td>
           </tr>
         </tbody>
       </table>
