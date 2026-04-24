@@ -3,53 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SneakerVault - Admin Dashboard</title>
+  <title>SneakerVault — Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>SneakerVault</h1>
-    <h2>Admin Dashboard</h2>
-    <nav>
-      <a href="index.html">Dashboard</a> |
-      <a href="add_sneaker.html">Add Sneaker</a> |
-      <a href="add_inventory.html">Add Inventory</a> |
-      <a href="supplier_management.html">Supplier Management</a> |
-      <a href="record_sale.html">Record Sale</a> |
-      <a href="customer_management.html">Customer Management</a> |
-      <a href="inventory_search.html">Inventory Search</a> |
-      <a href="reports.html">Reports</a>
-    </nav>
-    <hr />
+    <div class="header-top">
+      <a class="brand" href="index.html">SneakerVault</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="add_sneaker.html">Sneakers</a></li>
+          <li><a href="add_inventory.html">Inventory</a></li>
+          <li><a href="supplier_management.html">Suppliers</a></li>
+          <li><a href="record_sale.html">Record Sale</a></li>
+          <li><a href="customer_management.html">Customers</a></li>
+          <li><a href="inventory_search.html">Search</a></li>
+          <li><a href="reports.html">Reports</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <p id="message"></p>
-    <section>
-      <h3>Key Metrics</h3>
-      <p>Total Inventory Count: <span id="metricTotalInventory">-</span></p>
-      <p>Number of Items Sold: <span id="metricItemsSold">-</span></p>
-      <p>Available Items: <span id="metricItemsAvailable">-</span></p>
-      <p>Cost of Sold Inventory: $<span id="metricSoldCost">-</span></p>
-      <p><strong>Note:</strong> Metrics will be populated from database queries in a later phase.</p>
-    </section>
+    <div id="message"></div>
 
-    <section>
-      <h3>Recent Sales (Preview)</h3>
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Item ID</th>
-            <th>Customer ID</th>
-          </tr>
-        </thead>
-        <tbody id="recentSalesBody">
-          <tr>
-            <td colspan="2">Loading...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="label">Total Inventory</div>
+        <div class="value" id="metricTotalInventory">—</div>
+      </div>
+      <div class="metric-card" style="border-left-color:#22c55e">
+        <div class="label">Available</div>
+        <div class="value" id="metricItemsAvailable">—</div>
+      </div>
+      <div class="metric-card" style="border-left-color:#f59e0b">
+        <div class="label">Reserved</div>
+        <div class="value" id="metricItemsReserved">—</div>
+      </div>
+      <div class="metric-card" style="border-left-color:#ef4444">
+        <div class="label">Sold</div>
+        <div class="value" id="metricItemsSold">—</div>
+      </div>
+      <div class="metric-card" style="border-left-color:#8b5cf6">
+        <div class="label">Cost of Sold Inventory</div>
+        <div class="value" id="metricSoldCost">—</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="section-heading">Recent Sales</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item ID</th>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Customer ID</th>
+            </tr>
+          </thead>
+          <tbody id="recentSalesBody">
+            <tr><td colspan="4" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 </body>
 </html>

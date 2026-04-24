@@ -3,67 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SneakerVault - Add Sneaker</title>
+  <title>SneakerVault — Add Sneaker</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>SneakerVault</h1>
-    <h2>Add Sneaker Model</h2>
-    <nav>
-      <a href="index.html">Dashboard</a> |
-      <a href="add_sneaker.html">Add Sneaker</a> |
-      <a href="add_inventory.html">Add Inventory</a> |
-      <a href="supplier_management.html">Supplier Management</a> |
-      <a href="record_sale.html">Record Sale</a> |
-      <a href="customer_management.html">Customer Management</a> |
-      <a href="inventory_search.html">Inventory Search</a> |
-      <a href="reports.html">Reports</a>
-    </nav>
-    <hr />
+    <div class="header-top">
+      <a class="brand" href="index.html">SneakerVault</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="add_sneaker.html">Sneakers</a></li>
+          <li><a href="add_inventory.html">Inventory</a></li>
+          <li><a href="supplier_management.html">Suppliers</a></li>
+          <li><a href="record_sale.html">Record Sale</a></li>
+          <li><a href="customer_management.html">Customers</a></li>
+          <li><a href="inventory_search.html">Search</a></li>
+          <li><a href="reports.html">Reports</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <p id="message"></p>
-    <p>This page adds a sneaker model to the catalog. Use Add Inventory to add actual stock you own.</p>
-    <form id="addSneakerForm" action="#" method="post">
-      <label for="sneakerId">Sneaker ID (optional):</label><br />
-      <input type="number" min="1" id="sneakerId" name="sneakerId" placeholder="Leave blank to auto-generate" /><br /><br />
+    <div id="message"></div>
 
-      <label for="brand">Brand:</label><br />
-      <input type="text" id="brand" name="brand" required /><br /><br />
+    <div class="card">
+      <h3 class="section-heading">Add Sneaker Model</h3>
+      <p style="font-size:0.85rem;color:#64748b;margin-bottom:1.1rem;">
+        Add a model to the catalog. Use <a href="add_inventory.html">Add Inventory</a> to record physical stock you own.
+      </p>
+      <form id="addSneakerForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="sneakerId">Sneaker ID</label>
+            <input type="number" min="1" id="sneakerId" name="sneakerId" placeholder="Auto-generated" />
+            <span class="form-hint">Leave blank to auto-assign.</span>
+          </div>
+          <div class="form-group">
+            <label for="brand">Brand <span style="color:#ef4444">*</span></label>
+            <input type="text" id="brand" name="brand" required placeholder="e.g. Nike" />
+          </div>
+          <div class="form-group">
+            <label for="model">Model <span style="color:#ef4444">*</span></label>
+            <input type="text" id="model" name="model" required placeholder="e.g. Air Jordan 1 Retro High OG" />
+          </div>
+          <div class="form-group">
+            <label for="colorway">Colorway</label>
+            <input type="text" id="colorway" name="colorway" placeholder="e.g. Bred Toe" />
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Release Date</label>
+            <input type="date" id="releaseDate" name="releaseDate" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save Sneaker</button>
+          <button class="btn btn-secondary" type="reset">Clear</button>
+        </div>
+      </form>
+    </div>
 
-      <label for="model">Model:</label><br />
-      <input type="text" id="model" name="model" required /><br /><br />
-
-      <label for="colorway">Colorway:</label><br />
-      <input type="text" id="colorway" name="colorway" /><br /><br />
-
-      <label for="releaseDate">Release Date:</label><br />
-      <input type="date" id="releaseDate" name="releaseDate" /><br /><br />
-
-      <button type="submit">Save Sneaker Model</button>
-      <button type="reset">Clear</button>
-    </form>
-
-    <h3>Sneaker Models</h3>
-    <table border="1" cellpadding="8" cellspacing="0">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Brand</th>
-          <th>Model</th>
-          <th>Colorway</th>
-          <th>Release Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="sneakerBody">
-        <tr>
-          <td colspan="6">Sneaker query results will be shown here.</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="card">
+      <h3 class="section-heading">Sneaker Catalog</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Colorway</th>
+              <th>Release Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="sneakerBody">
+            <tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 </body>
 </html>

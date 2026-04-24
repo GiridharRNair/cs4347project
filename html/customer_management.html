@@ -3,83 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SneakerVault - Customer Management</title>
+  <title>SneakerVault — Customers</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>SneakerVault</h1>
-    <h2>Customer Management</h2>
-    <nav>
-      <a href="index.html">Dashboard</a> |
-      <a href="add_sneaker.html">Add Sneaker</a> |
-      <a href="add_inventory.html">Add Inventory</a> |
-      <a href="supplier_management.html">Supplier Management</a> |
-      <a href="record_sale.html">Record Sale</a> |
-      <a href="customer_management.html">Customer Management</a> |
-      <a href="inventory_search.html">Inventory Search</a> |
-      <a href="reports.html">Reports</a>
-    </nav>
-    <hr />
+    <div class="header-top">
+      <a class="brand" href="index.html">SneakerVault</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="add_sneaker.html">Sneakers</a></li>
+          <li><a href="add_inventory.html">Inventory</a></li>
+          <li><a href="supplier_management.html">Suppliers</a></li>
+          <li><a href="record_sale.html">Record Sale</a></li>
+          <li><a href="customer_management.html">Customers</a></li>
+          <li><a href="inventory_search.html">Search</a></li>
+          <li><a href="reports.html">Reports</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <p id="message"></p>
-    <section>
-      <h3>Save Customer</h3>
-      <form id="customerSaveForm" action="#" method="post">
-        <label for="customerId">Customer ID (optional):</label><br />
-        <input type="number" min="1" id="customerId" name="customerId" placeholder="Leave blank to auto-generate" /><br /><br />
+    <div id="message"></div>
 
-        <label for="firstName">First Name:</label><br />
-        <input type="text" id="firstName" name="firstName" required /><br /><br />
-
-        <label for="lastName">Last Name:</label><br />
-        <input type="text" id="lastName" name="lastName" required /><br /><br />
-
-        <label for="email">Email:</label><br />
-        <input type="email" id="email" name="email" required /><br /><br />
-
-        <label for="phone">Phone:</label><br />
-        <input type="tel" id="phone" name="phone" /><br /><br />
-
-        <button type="submit">Save Customer</button>
-        <button type="reset">Clear</button>
+    <div class="card">
+      <h3 class="section-heading">Add / Update Customer</h3>
+      <p style="font-size:0.85rem;color:#64748b;margin-bottom:1.1rem;">
+        Provide an existing Customer ID to update that record. Leave it blank to create a new customer.
+      </p>
+      <form id="customerSaveForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="customerId">Customer ID</label>
+            <input type="number" min="1" id="customerId" name="customerId" placeholder="Auto-generated" />
+            <span class="form-hint">Leave blank to create new.</span>
+          </div>
+          <div class="form-group">
+            <label for="firstName">First Name <span style="color:#ef4444">*</span></label>
+            <input type="text" id="firstName" name="firstName" required placeholder="First name" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name <span style="color:#ef4444">*</span></label>
+            <input type="text" id="lastName" name="lastName" required placeholder="Last name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span style="color:#ef4444">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="email@example.com" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="Optional" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save Customer</button>
+          <button class="btn btn-secondary" type="reset">Clear</button>
+        </div>
       </form>
-    </section>
+    </div>
 
-    <hr />
-
-    <section>
-      <h3>Search Customers</h3>
-      <form id="customerSearchForm" action="#" method="get">
-        <label for="searchName">Name:</label>
-        <input type="text" id="searchName" name="searchName" />
-
-        <label for="searchEmail">Email:</label>
-        <input type="text" id="searchEmail" name="searchEmail" />
-
-        <button type="submit">Search</button>
+    <div class="card">
+      <h3 class="section-heading">Customer List</h3>
+      <form id="customerSearchForm" class="search-bar">
+        <div class="form-group">
+          <label for="searchName">Name</label>
+          <input type="text" id="searchName" name="searchName" placeholder="Search by name…" />
+        </div>
+        <div class="form-group">
+          <label for="searchEmail">Email</label>
+          <input type="text" id="searchEmail" name="searchEmail" placeholder="Search by email…" />
+        </div>
+        <div style="align-self:flex-end;">
+          <button class="btn btn-secondary" type="submit">Search</button>
+        </div>
       </form>
-
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Customer ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="customerBody">
-          <tr>
-            <td colspan="6">Loading...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="customerBody">
+            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 </body>
 </html>

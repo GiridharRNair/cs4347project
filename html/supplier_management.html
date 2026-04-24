@@ -3,79 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SneakerVault - Supplier Management</title>
+  <title>SneakerVault — Suppliers</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>SneakerVault</h1>
-    <h2>Supplier Management</h2>
-    <nav>
-      <a href="index.html">Dashboard</a> |
-      <a href="add_sneaker.html">Add Sneaker</a> |
-      <a href="add_inventory.html">Add Inventory</a> |
-      <a href="supplier_management.html">Supplier Management</a> |
-      <a href="record_sale.html">Record Sale</a> |
-      <a href="customer_management.html">Customer Management</a> |
-      <a href="inventory_search.html">Inventory Search</a> |
-      <a href="reports.html">Reports</a>
-    </nav>
-    <hr />
+    <div class="header-top">
+      <a class="brand" href="index.html">SneakerVault</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="add_sneaker.html">Sneakers</a></li>
+          <li><a href="add_inventory.html">Inventory</a></li>
+          <li><a href="supplier_management.html">Suppliers</a></li>
+          <li><a href="record_sale.html">Record Sale</a></li>
+          <li><a href="customer_management.html">Customers</a></li>
+          <li><a href="inventory_search.html">Search</a></li>
+          <li><a href="reports.html">Reports</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <p id="message"></p>
-    <section>
-      <h3>Save Supplier</h3>
-      <form id="supplierSaveForm" action="#" method="post">
-        <label for="supplierId">Supplier ID (optional):</label><br />
-        <input type="number" min="1" id="supplierId" name="supplierId" placeholder="Leave blank to auto-generate" /><br /><br />
+    <div id="message"></div>
 
-        <label for="name">Name:</label><br />
-        <input type="text" id="name" name="name" required /><br /><br />
-
-        <label for="type">Type:</label><br />
-        <input type="text" id="type" name="type" required /><br /><br />
-
-        <label for="contactInfo">Contact Info:</label><br />
-        <input type="text" id="contactInfo" name="contactInfo" required /><br /><br />
-
-        <button type="submit">Save Supplier</button>
-        <button type="reset">Clear</button>
+    <div class="card">
+      <h3 class="section-heading">Add / Update Supplier</h3>
+      <p style="font-size:0.85rem;color:#64748b;margin-bottom:1.1rem;">
+        Provide an existing Supplier ID to update that record. Leave it blank to create a new one.
+      </p>
+      <form id="supplierSaveForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="supplierId">Supplier ID</label>
+            <input type="number" min="1" id="supplierId" name="supplierId" placeholder="Auto-generated" />
+            <span class="form-hint">Leave blank to create new.</span>
+          </div>
+          <div class="form-group">
+            <label for="name">Name <span style="color:#ef4444">*</span></label>
+            <input type="text" id="name" name="name" required placeholder="e.g. Nike SNKRS" />
+          </div>
+          <div class="form-group">
+            <label for="type">Type <span style="color:#ef4444">*</span></label>
+            <input type="text" id="type" name="type" required placeholder="e.g. Retail, Reseller" />
+          </div>
+          <div class="form-group">
+            <label for="contactInfo">Contact Info <span style="color:#ef4444">*</span></label>
+            <input type="text" id="contactInfo" name="contactInfo" required placeholder="Email or phone number" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save Supplier</button>
+          <button class="btn btn-secondary" type="reset">Clear</button>
+        </div>
       </form>
-    </section>
+    </div>
 
-    <hr />
-
-    <section>
-      <h3>Search Suppliers</h3>
-      <form id="supplierSearchForm" action="#" method="get">
-        <label for="searchName">Name:</label>
-        <input type="text" id="searchName" name="searchName" />
-
-        <label for="searchType">Type:</label>
-        <input type="text" id="searchType" name="searchType" />
-
-        <button type="submit">Search</button>
+    <div class="card">
+      <h3 class="section-heading">Supplier List</h3>
+      <form id="supplierSearchForm" class="search-bar">
+        <div class="form-group">
+          <label for="searchName">Name</label>
+          <input type="text" id="searchName" name="searchName" placeholder="Search by name…" />
+        </div>
+        <div class="form-group">
+          <label for="searchType">Type</label>
+          <input type="text" id="searchType" name="searchType" placeholder="Search by type…" />
+        </div>
+        <div style="align-self:flex-end;">
+          <button class="btn btn-secondary" type="submit">Search</button>
+        </div>
       </form>
-
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Supplier ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Contact Info</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="supplierBody">
-          <tr>
-            <td colspan="5">Loading...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Contact Info</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="supplierBody">
+            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 </body>
 </html>

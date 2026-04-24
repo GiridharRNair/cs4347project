@@ -23,7 +23,7 @@ function setMessage(message, isError) {
   const el = document.getElementById("message");
   if (!el) return;
   el.textContent = message || "";
-  el.style.color = isError ? "#b91c1c" : "#065f46";
+  el.className = message ? (isError ? "msg-error" : "msg-success") : "";
 }
 
 function pageName() {
@@ -32,10 +32,22 @@ function pageName() {
   return path.split("/").pop();
 }
 
+function highlightActiveNav() {
+  const page = pageName();
+  document.querySelectorAll("nav a").forEach((a) => {
+    if (a.getAttribute("href") === page) a.classList.add("active");
+  });
+}
+
+function statusBadge(status) {
+  const cls = { Available: "badge-available", Reserved: "badge-reserved", Sold: "badge-sold" }[status] || "";
+  return `<span class="badge ${cls}">${escapeHtml(status)}</span>`;
+}
+
 function renderRows(tbody, rows, emptyText, rowRenderer) {
   if (!tbody) return;
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="20">${escapeHtml(emptyText)}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="20" style="text-align:center;color:#94a3b8;padding:2rem 1rem;">${escapeHtml(emptyText)}</td></tr>`;
     return;
   }
   tbody.innerHTML = rows.map(rowRenderer).join("");
@@ -44,15 +56,18 @@ function renderRows(tbody, rows, emptyText, rowRenderer) {
 async function initDashboard() {
   const data = await api("/api/dashboard");
   document.getElementById("metricTotalInventory").textContent = data.metrics.total_inventory;
-  document.getElementById("metricItemsSold").textContent = data.metrics.items_sold;
   document.getElementById("metricItemsAvailable").textContent = data.metrics.items_available;
-  document.getElementById("metricSoldCost").textContent = Number(data.metrics.sold_inventory_cost).toFixed(2);
+  document.getElementById("metricItemsReserved").textContent = data.metrics.items_reserved;
+  document.getElementById("metricItemsSold").textContent = data.metrics.items_sold;
+  document.getElementById("metricSoldCost").textContent = "$" + Number(data.metrics.sold_inventory_cost).toFixed(2);
 
   const tbody = document.getElementById("recentSalesBody");
   renderRows(tbody, data.recentSold, "No sold items yet.", (row) => `
     <tr>
       <td>${escapeHtml(row.ItemID)}</td>
-      <td>${escapeHtml(row.CustomerID ?? "-")}</td>
+      <td>${escapeHtml(row.Brand)}</td>
+      <td>${escapeHtml(row.Model)}</td>
+      <td>${escapeHtml(row.CustomerID ?? "—")}</td>
     </tr>
   `);
 }
@@ -65,14 +80,15 @@ async function loadSneakers() {
       <td>${escapeHtml(row.ID)}</td>
       <td>${escapeHtml(row.Brand)}</td>
       <td>${escapeHtml(row.Model)}</td>
-      <td>${escapeHtml(row.Colorway)}</td>
-      <td>${escapeHtml(row.ReleaseDate ?? "-")}</td>
-      <td><button type="button" data-sneaker-id="${escapeHtml(row.ID)}">Delete</button></td>
+      <td>${escapeHtml(row.Colorway || "—")}</td>
+      <td>${escapeHtml(row.ReleaseDate ?? "—")}</td>
+      <td><button class="btn btn-danger btn-sm" type="button" data-sneaker-id="${escapeHtml(row.ID)}">Delete</button></td>
     </tr>
   `);
 
   tbody.querySelectorAll("button[data-sneaker-id]").forEach((btn) => {
     btn.addEventListener("click", async () => {
+      if (!confirm("Delete this sneaker model? This cannot be undone.")) return;
       try {
         await api(`/api/sneakers/${btn.getAttribute("data-sneaker-id")}`, { method: "DELETE" });
         setMessage("Sneaker deleted.", false);
@@ -110,27 +126,26 @@ function initAddSneaker() {
 async function loadInventory(query = "") {
   const data = await api(`/api/inventory${query}`);
   const tbody = document.getElementById("inventoryBody");
-  renderRows(tbody, data.inventory, "No inventory rows found.", (row) => `
+  renderRows(tbody, data.inventory, "No inventory items found.", (row) => `
     <tr>
       <td>${escapeHtml(row.ItemID)}</td>
-      <td>${escapeHtml(row.SneakerID)}</td>
-      <td>${escapeHtml(row.Brand)}</td>
-      <td>${escapeHtml(row.Model)}</td>
+      <td><strong>${escapeHtml(row.Brand)}</strong> ${escapeHtml(row.Model)}</td>
       <td>${escapeHtml(row.Size)}</td>
       <td>${escapeHtml(row.ItemCondition)}</td>
-      <td>${escapeHtml(Number(row.PurchasePrice).toFixed(2))}</td>
-      <td>${escapeHtml(row.Status)}</td>
-      <td>${escapeHtml(row.CustomerID ?? "-")}</td>
-      <td><button type="button" data-item-id="${escapeHtml(row.ItemID)}">Delete</button></td>
+      <td>$${escapeHtml(Number(row.PurchasePrice).toFixed(2))}</td>
+      <td>${statusBadge(row.Status)}</td>
+      <td>${escapeHtml(row.CustomerID ?? "—")}</td>
+      <td><button class="btn btn-danger btn-sm" type="button" data-item-id="${escapeHtml(row.ItemID)}">Delete</button></td>
     </tr>
   `);
 
   tbody.querySelectorAll("button[data-item-id]").forEach((btn) => {
     btn.addEventListener("click", async () => {
+      if (!confirm("Delete this inventory item? This cannot be undone.")) return;
       try {
         await api(`/api/inventory/${btn.getAttribute("data-item-id")}`, { method: "DELETE" });
         setMessage("Inventory item deleted.", false);
-        await loadInventory();
+        await loadInventory(query);
       } catch (err) {
         setMessage(err.message, true);
       }
@@ -172,16 +187,17 @@ async function loadSuppliers(query = "") {
       <td>${escapeHtml(row.Name)}</td>
       <td>${escapeHtml(row.Type)}</td>
       <td>${escapeHtml(row.ContactInfo)}</td>
-      <td><button type="button" data-supplier-id="${escapeHtml(row.ID)}">Delete</button></td>
+      <td><button class="btn btn-danger btn-sm" type="button" data-supplier-id="${escapeHtml(row.ID)}">Delete</button></td>
     </tr>
   `);
 
   tbody.querySelectorAll("button[data-supplier-id]").forEach((btn) => {
     btn.addEventListener("click", async () => {
+      if (!confirm("Delete this supplier?")) return;
       try {
         await api(`/api/suppliers/${btn.getAttribute("data-supplier-id")}`, { method: "DELETE" });
         setMessage("Supplier deleted.", false);
-        await loadSuppliers();
+        await loadSuppliers(query);
       } catch (err) {
         setMessage(err.message, true);
       }
@@ -229,20 +245,20 @@ async function loadCustomers(query = "") {
   renderRows(tbody, data.customers, "No customers found.", (row) => `
     <tr>
       <td>${escapeHtml(row.ID)}</td>
-      <td>${escapeHtml(row.FirstName)}</td>
-      <td>${escapeHtml(row.LastName)}</td>
+      <td>${escapeHtml(row.FirstName)} ${escapeHtml(row.LastName)}</td>
       <td>${escapeHtml(row.Email)}</td>
-      <td>${escapeHtml(row.Phone ?? "-")}</td>
-      <td><button type="button" data-customer-id="${escapeHtml(row.ID)}">Delete</button></td>
+      <td>${escapeHtml(row.Phone ?? "—")}</td>
+      <td><button class="btn btn-danger btn-sm" type="button" data-customer-id="${escapeHtml(row.ID)}">Delete</button></td>
     </tr>
   `);
 
   tbody.querySelectorAll("button[data-customer-id]").forEach((btn) => {
     btn.addEventListener("click", async () => {
+      if (!confirm("Delete this customer?")) return;
       try {
         await api(`/api/customers/${btn.getAttribute("data-customer-id")}`, { method: "DELETE" });
         setMessage("Customer deleted.", false);
-        await loadCustomers();
+        await loadCustomers(query);
       } catch (err) {
         setMessage(err.message, true);
       }
@@ -291,9 +307,8 @@ async function loadSoldPreview() {
   renderRows(tbody, data.soldPreview, "No sold items yet.", (row) => `
     <tr>
       <td>${escapeHtml(row.ItemID)}</td>
-      <td>${escapeHtml(row.CustomerID ?? "-")}</td>
-      <td>${escapeHtml(row.Brand)}</td>
-      <td>${escapeHtml(row.Model)}</td>
+      <td><strong>${escapeHtml(row.Brand)}</strong> ${escapeHtml(row.Model)}</td>
+      <td>${escapeHtml(row.CustomerID ?? "—")}</td>
     </tr>
   `);
 }
@@ -308,7 +323,7 @@ function initRecordSale() {
     };
     try {
       await api("/api/record_sale", { method: "POST", body: JSON.stringify(payload) });
-      setMessage("Inventory item marked as sold.", false);
+      setMessage("Sale recorded — item marked as Sold.", false);
       form.reset();
       await loadSoldPreview();
     } catch (err) {
@@ -340,11 +355,14 @@ function initInventorySearch() {
 async function initReports() {
   const data = await api("/api/reports");
 
-  renderRows(document.getElementById("statusBreakdownBody"), data.statusBreakdown, "No data found.", (row) => `
-    <tr><td>${escapeHtml(row.Status)}</td><td>${escapeHtml(row.Count)}</td></tr>
+  renderRows(document.getElementById("statusBreakdownBody"), data.statusBreakdown, "No data.", (row) => `
+    <tr>
+      <td>${statusBadge(row.Status)}</td>
+      <td>${escapeHtml(row.Count)}</td>
+    </tr>
   `);
 
-  renderRows(document.getElementById("supplierStockBody"), data.supplierStock, "No data found.", (row) => `
+  renderRows(document.getElementById("supplierStockBody"), data.supplierStock, "No data.", (row) => `
     <tr>
       <td>${escapeHtml(row.SupplierID)}</td>
       <td>${escapeHtml(row.Name)}</td>
@@ -354,18 +372,19 @@ async function initReports() {
     </tr>
   `);
 
-  renderRows(document.getElementById("soldByModelBody"), data.soldByModel, "No data found.", (row) => `
+  renderRows(document.getElementById("soldByModelBody"), data.soldByModel, "No data.", (row) => `
     <tr>
       <td>${escapeHtml(row.SneakerID)}</td>
       <td>${escapeHtml(row.Brand)}</td>
       <td>${escapeHtml(row.Model)}</td>
       <td>${escapeHtml(row.SoldCount)}</td>
-      <td>${escapeHtml(Number(row.TotalCost).toFixed(2))}</td>
+      <td>$${escapeHtml(Number(row.TotalCost).toFixed(2))}</td>
     </tr>
   `);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  highlightActiveNav();
   try {
     const page = pageName();
     if (page === "index.html") await initDashboard();

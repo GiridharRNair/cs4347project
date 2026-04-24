@@ -1,0 +1,161 @@
+ 1
+UTD- Spring 2026
+CS 4347 Database Systems
+Database Project Description
+Introduction:
+You will have the opportunity to investigate and gain practical experience in database design and
+programming through a project. The project involves designing a database and providing comprehensive
+supporting evidence of its sound design, as well as developing the associated front-end and back-end
+components to implement common functionalities such as record insertion, updating, deletion, browsing,
+searching, and filtering.
+The complexity, difficulty, scope, and theme of a team project may vary considerably. The only
+requirement for this project is that it must be related to the course material covered. MySQL should be
+used to create and query the database, while PHP or any other tool with which you are proficient may be
+used to develop an interface that allows users and administrators to access and modify the database.
+
+Team Structure:
+The project is a team-based assignment designed to help students develop skills for becoming effective
+collaborators in a software project. Each team will consist of four to six students, with one student
+designated as the team leader. All team members are expected to contribute to every project deliverable.
+Important Note: To successfully complete the database project for this course, you must first become familiar
+with installing the required software and learning how to connect HTML to a MySQL database using PHP. A
+variety of online tutorials and instructional videos are available to guide you through this process.
+Project Phases and Deliverables Items:
+Phase 0 (5%): (Due on Sunday 02/08/2026 )
+Teams Formation:
+By this date (Sunday, February 08, 2026), you should have formed your teams. Each team must submit
+the team’s name and the members of the team in which you provide each member’s name and his/her
+student ID. Only the team leader needs to submit such infromation via eLearning.
+
+Phase 1 (15%): (Due on Sunday 02/22/2026):
+You are required to submit a report that provides an overview of your project idea. While the details of
+this summary may evolve as the course progresses, the overall theme should remain consistent.
+The proposal should be at least two (2) pages in length and should clearly outline the problem you intend
+to address, your proposed solution, and the expected deliverables for the completed project. The report
+should include the following sections:
+1. Project details: Name of your project, your team, and team members. Please include Members’ IDs.
+2. Problem Statement: In what ways will your suggested database system solve the issue? Why would you need a
+database as opposed to an Excel document?
+3. Target user: Who will access the database? Who is going to manage the database? Giving a real-world example
+is suggested.
+4. List of Relations: Choose at least four relations (tables) that you must keep up with for this database. Give
+schemas for every one of these relationships. 
+ 2
+5. Web interface: Describe the web interfaces you'll be designing in preliminary designs. Web interfaces often
+consist of a "form," where a user can enter data and based on that data, the tables are updated, or query results
+are generated. Your project's user interface looks like this.
+6. Data: How will you populate your relations? You can get the data from external sources, or you can create your
+own data.
+How to submit:
+Save your report as Phase1Report.pdf and upload it via eLearning. Only the team leader needs to submit
+this pdf file via eLearning.
+
+Phase 2 (20%): (Due on Friday 03/13/2026)
+Our next phase is designing the database. All you need to do for this part is to provide an ER (or EER)
+model for your database and then convert it into relations (tables).
+
+Task A: Draw an ER (or EER) diagram.
+The ER (or EER) diagram should accurately represent the proposal you have provided. If new entities are
+needed, you should add (or edit) them after starting with the same relations that you described in your
+proposal (in Phase I). The entities, their characteristics, and their connections (relationships) must all be
+identified.
+For each entity (for each relation), provide total participation, and (min, max) constraint.
+There are many utilities on the web for drawing these ER (or EER) diagrams. For example
+https://creately. com/ and www.draw.io.
+
+Task B: Convert your ER diagram into relations.
+Once the ER (or EER) diagram is ready, you need to convert the ER (or EER) model into a relational
+database schema.
+Your report of this phase should have the following components:
+1. The ER (or EER) diagram.
+2. A list of relations and their attributes.
+• Indicate the primary key and foreign keys (if any) for each relation.
+• Write a detailed description of each attribute (for each table), its purpose, and data type.
+• Indicate each attribute’s default value (if any) or if the attribute can be set to ‘null’.
+• Explain the actions taken on any foreign key when the primary key (that the foreign key refers to) is deleted
+(For example no action, delete cascade, set null, or set default).
+2. A mapping from the ER (or EER) diagram to the Relation Database Schema.
+
+How to submit:
+Save your report as Phase2Report.pdf and upload it via eLearning. Only the team leader needs to
+submit this pdf file via eLearning.
+Phase 3 (30%): (Due on Sunday 04/05/2026):
+In the first part of this phase, you are required to provide a list of all the relations you are using, along
+with their associated functional dependencies. If any of the relations are not in Third Normal Form
+(3NF), you must convert them into 3NF.
+In the second part of this phase, you will primarily work with HTML, PHP, and SQL. For the first time,
+you will translate your database’s logical design into a physical design. At this stage, you will also
+develop functional interfaces for interacting with the database.
+ 3
+Task A: Third Normal Form Normalization
+You must ensure that all relations for this project are in Third Normal Form (3NF). If any table is not in
+3NF, it must be normalized accordingly. After the decomposition process, all resulting relations should be
+in 3NF.
+Create a file named TaskA.pdf that documents the conversion of the initial schema into the final schema,
+with all relations expressed in Third Normal Form (3NF). This file should also include all the functional
+dependencies identified at the start.
+Task B: Create forms using HTML.
+In Phase I, you presented your web interface as graphics. This time, you are required to deliver the
+interface as HTML files. Provide a list of all HTML files included in your interface. These interfaces
+are primarily intended to capture user input; database connectivity and PHP code are not required for
+this task. The focus is solely on the interface. If necessary, you may also include JavaScript files for
+input validation and CSS files for styling.
+• For this stage, CSS and JavaScript are not required.
+• Provide HTML files that will be filled with the results of queries. There is no need to connect to the
+databases to present results for this task; only note that you will do so later.
+Create a file called taskB.pdf and add all the HTML, CSS, and JavaScript (if any) files to it.
+Task C: Creating and loading relations.
+The relations (tables) required for your project were created in Phase 2. In this phase, you will define the
+actual tables. To create all tables in your database, prepare a file named create.sql. The data files for these
+tables should be either tab- or comma-delimited (csv files or data files in any other format). You may
+generate these data files yourself using dummy values. Additionally, create a load.sql file that includes
+all the data files.
+Create a file named TaskC.pdf and include the create.sql and load.sql files.
+How to submit
+A new folder called Phase3 Report should be created. Into this folder, upload the files taskA.pdf,
+taskB.pdf, and taskC.pdf.
+Submit this folder via eLearning. Only the team leader needs to submit this folder via eLearning.
+
+Phase 4 (20%): Due: From Monday (04/27/2026) through Thursday (04/30/2026)
+For this phase, just demonstrate this project to the TA during the final demo period.
+This phase of your project requires you to produce a fully functional website that can communicate
+with the underlying database system and carry out necessary CRUD (create, read, update, delete)
+actions.
+A few HTML files represented the forms that were delivered in phase. The database and these forms
+might not have communicated to one another. For these HTML files to function, the required
+corrections must be made. It should be possible to use all the reports and forms that display the
+results of queries. When necessary, your website must validate user input and flag any mistakes. 
+ 4
+Phase 5 -Final Complete Project Report (10%) (Due on Friday Sunday 05/03, 2026)
+Submit a well-written and complete report that includes the work that you have done in all the
+previous phases (one through four). The contents of the Final Project Report should include, but not
+be limited to the following sections:
+Only the team leader needs to submit this final file.
+The final report should include at least the following sections:
+1. Cover page
+Provide the title of the course, the title of the project, the name of the instructor, the names of the team
+members, and the date.
+2. Table of contents
+Show the contents of the report and their corresponding page number.
+3. Introduction
+Describes the problem domain, project objectives, scope, and technologies used.
+4. Requirements Analysis
+Explains system requirements, user needs, assumptions, and constraints.
+5. Logical Database Design
+Present the ER diagram, including entities and relationships, as well as the relational schema and
+keys. Show the relational database schema mapped from the ER diagram, with appropriate referential
+integrity constraints.
+Normalization: Identify and analyze the functional dependencies for each relation presented in the
+relational database schema. Then, demonstrate the normalization process and present the resulting
+normalized tables for each relation up to Third Normal Form (3NF), where applicable.
+6. Database Implementation
+Show the SQL code used to create your database.
+7. Application and User Interfaces
+Describes your application (interfaces), HTML/PHP interfaces, user interactions, and database
+connectivity.
+8. Results
+Presents sample SQL commands (Select, Update, Delete, and Views) and their outputs.
+9. Conclusion and Future Work
+Summarizes achievements, limitations, and possible enhancements.
+10. References and Appendix
+Lists resources used and includes full SQL code, interface screenshots, or additional materials.

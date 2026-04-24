@@ -3,90 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SneakerVault - Reports</title>
+  <title>SneakerVault — Reports</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>SneakerVault</h1>
-    <h2>Reports</h2>
-    <nav>
-      <a href="index.html">Dashboard</a> |
-      <a href="add_sneaker.html">Add Sneaker</a> |
-      <a href="add_inventory.html">Add Inventory</a> |
-      <a href="supplier_management.html">Supplier Management</a> |
-      <a href="record_sale.html">Record Sale</a> |
-      <a href="customer_management.html">Customer Management</a> |
-      <a href="inventory_search.html">Inventory Search</a> |
-      <a href="reports.html">Reports</a>
-    </nav>
-    <hr />
+    <div class="header-top">
+      <a class="brand" href="index.html">SneakerVault</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="add_sneaker.html">Sneakers</a></li>
+          <li><a href="add_inventory.html">Inventory</a></li>
+          <li><a href="supplier_management.html">Suppliers</a></li>
+          <li><a href="record_sale.html">Record Sale</a></li>
+          <li><a href="customer_management.html">Customers</a></li>
+          <li><a href="inventory_search.html">Search</a></li>
+          <li><a href="reports.html">Reports</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <p id="message"></p>
-    <section>
-      <h3>Inventory Status Breakdown</h3>
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Status</th>
-            <th>Count</th>
-          </tr>
-        </thead>
-        <tbody id="statusBreakdownBody">
-          <tr>
-            <td colspan="2">Loading...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <div id="message"></div>
 
-    <hr />
+    <div class="card">
+      <h3 class="section-heading">Inventory Status Breakdown</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody id="statusBreakdownBody">
+            <tr><td colspan="2" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <section>
-      <h3>Supplier Inventory Activity</h3>
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Supplier ID</th>
-            <th>Name</th>
-            <th>Total Items</th>
-            <th>Available</th>
-            <th>Sold</th>
-          </tr>
-        </thead>
-        <tbody id="supplierStockBody">
-          <tr>
-            <td colspan="5">Loading...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <div class="card">
+      <h3 class="section-heading">Supplier Inventory Activity</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Supplier ID</th>
+              <th>Name</th>
+              <th>Total Items</th>
+              <th>Available</th>
+              <th>Sold</th>
+            </tr>
+          </thead>
+          <tbody id="supplierStockBody">
+            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <hr />
-
-    <section>
-      <h3>Most Sold Sneaker Models</h3>
-      <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-          <tr>
-            <th>Sneaker ID</th>
-            <th>Brand</th>
-            <th>Model</th>
-            <th>Sold Count</th>
-            <th>Total Cost Basis</th>
-          </tr>
-        </thead>
-        <tbody id="soldByModelBody">
-          <tr>
-            <td colspan="5">Loading...</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-
+    <div class="card">
+      <h3 class="section-heading">Top Selling Sneaker Models</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Sneaker ID</th>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Units Sold</th>
+              <th>Total Cost Basis</th>
+            </tr>
+          </thead>
+          <tbody id="soldByModelBody">
+            <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 </body>
 </html>
