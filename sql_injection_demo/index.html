@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQL Injection Demo — CS 4347</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #18181b;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 1rem;
+    }
+    .brand { color: #f97316; font-size: 1.35rem; font-weight: 700; text-decoration: none; }
+    .subtitle { color: #a1a1aa; font-size: 0.8rem; }
+
+    main { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.07);
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .badge-unsafe { background: #fee2e2; color: #991b1b; }
+    .badge-safe   { background: #dcfce7; color: #166534; }
+
+    .part-desc { font-size: 0.85rem; color: #64748b; margin-bottom: 1.1rem; }
+
+    .hint {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      margin-bottom: 1.1rem;
+    }
+    .hint-warn { background: #fef3c7; border: 1px solid #fde68a; color: #78350f; }
+    .hint-ok   { background: #dcfce7; border: 1px solid #bbf7d0; color: #166534; }
+    .hint strong { display: block; margin-bottom: 0.3rem; font-size: 0.8rem; }
+    code {
+      background: rgba(0,0,0,.08);
+      border-radius: 4px;
+      padding: 0.1em 0.35em;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 150px; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: #374151; }
+    .form-group input {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.875rem;
+      background: #f8fafc;
+      color: #1e293b;
+      width: 100%;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249,115,22,.12);
+      background: #fff;
+    }
+
+    .btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      align-self: flex-end;
+    }
+    .btn-danger  { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-primary { background: #f97316; color: #fff; }
+    .btn-primary:hover { background: #ea6c0a; }
+
+    .query-label { font-size: 0.78rem; font-weight: 600; color: #64748b; margin-bottom: 0.35rem; }
+    .query-box {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-bottom: 1rem;
+      min-height: 3rem;
+    }
+
+    .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead th {
+      background: #f8fafc;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      border-bottom: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    tbody td { padding: 0.65rem 1rem; border-bottom: 1px solid #f1f5f9; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #fafbff; }
+
+    .row-count { font-size: 0.78rem; color: #64748b; margin-bottom: 0.5rem; }
+    .row-count strong { color: #0f172a; }
+
+    hr { border: none; border-top: 2px dashed #e2e8f0; margin: 2rem 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <a class="brand" href="http://127.0.0.1:5000">← SneakerVault</a>
+    <span class="subtitle">CS 4347 — Assignment 5: SQL Injection Demo &nbsp;|&nbsp; Port 5001</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── Part A: Vulnerable ──────────────────────────────────── -->
+  <div class="card">
+    <h2>Part (a) — Vulnerable Form <span class="badge badge-unsafe">UNSAFE — SQL Injection</span></h2>
+    <p class="part-desc">
+      User input is concatenated directly into the SQL query string. A crafted input can
+      alter the query's logic and retrieve data without knowing the correct values.
+    </p>
+
+    <div class="hint hint-warn">
+      <strong>Injection payload to try:</strong>
+      In the <em>Brand</em> field, type: <code>' OR 1=1--</code><br/>
+      Leave <em>Model</em> and <em>Colorway</em> blank and click <strong>Search (Unsafe)</strong>.<br/>
+      The <code>--</code> starts a SQL comment that discards the rest of the WHERE clause, turning it into
+      <code>WHERE Brand = '' OR 1=1</code> — always TRUE — returning every sneaker in the database
+      without knowing any real brand name.
+    </div>
+
+    <form id="unsafeForm" class="search-bar">
+      <div class="form-group">
+        <label for="u_brand">Brand</label>
+        <input type="text" id="u_brand" placeholder="Nike  –or–  ' OR 1=1--" />
+      </div>
+      <div class="form-group">
+        <label for="u_model">Model</label>
+        <input type="text" id="u_model" placeholder="Air Max" />
+      </div>
+      <div class="form-group">
+        <label for="u_colorway">Colorway</label>
+        <input type="text" id="u_colorway" placeholder="White/Black" />
+      </div>
+      <button class="btn btn-danger" type="submit">Search (Unsafe)</button>
+    </form>
+
+    <p class="query-label">SQL query sent to the database (built by string concatenation):</p>
+    <div class="query-box" id="unsafeQuery">— submit the form to see the generated query —</div>
+
+    <p class="row-count" id="unsafeCount"></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Brand</th><th>Model</th><th>Colorway</th><th>Release Date</th></tr>
+        </thead>
+        <tbody id="unsafeBody">
+          <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">Submit the form to run a query.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ── Part B: Safe ────────────────────────────────────────── -->
+  <div class="card">
+    <h2>Part (b) — Prepared Statement <span class="badge badge-safe">SAFE — Injection Prevented</span></h2>
+    <p class="part-desc">
+      The same query is rewritten using parameterized placeholders (<code>?</code>).
+      SQLite binds the values separately — injected SQL is treated as plain text and
+      cannot alter the query's structure.
+    </p>
+
+    <div class="hint hint-ok">
+      <strong>Try the same payload here:</strong>
+      Enter <code>' OR 1=1--</code> in the Brand field and click <strong>Search (Safe)</strong>.<br/>
+      The prepared statement treats the entire string as a literal value, so the database looks for a brand
+      literally named <code>' OR 1=1--</code> — no rows match, injection fails.
+    </div>
+
+    <form id="safeForm" class="search-bar">
+      <div class="form-group">
+        <label for="s_brand">Brand</label>
+        <input type="text" id="s_brand" placeholder="Nike  –or–  ' OR 1=1--" />
+      </div>
+      <div class="form-group">
+        <label for="s_model">Model</label>
+        <input type="text" id="s_model" placeholder="Air Max" />
+      </div>
+      <div class="form-group">
+        <label for="s_colorway">Colorway</label>
+        <input type="text" id="s_colorway" placeholder="White/Black" />
+      </div>
+      <button class="btn btn-primary" type="submit">Search (Safe)</button>
+    </form>
+
+    <p class="query-label">Parameterized query sent to the database (with bound values shown):</p>
+    <div class="query-box" id="safeQuery">— submit the form to see the parameterized query —</div>
+
+    <p class="row-count" id="safeCount"></p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Brand</th><th>Model</th><th>Colorway</th><th>Release Date</th></tr>
+        </thead>
+        <tbody id="safeBody">
+          <tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:2rem;">Submit the form to run a query.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function renderRows(data, tbodyId, countId) {
+    const tbody = document.getElementById(tbodyId);
+    const count = document.getElementById(countId);
+    const rows  = data.results || [];
+
+    if (data.error) {
+      tbody.innerHTML = `<tr><td colspan="5" style="color:#dc2626;padding:1rem;">DB error: ${data.error}</td></tr>`;
+      count.innerHTML = '';
+      return;
+    }
+
+    count.innerHTML = rows.length
+      ? `<strong>${rows.length}</strong> row(s) returned`
+      : '<strong>0</strong> rows returned';
+
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:1.5rem;">No matching rows.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td>${r.ID}</td>
+        <td>${r.Brand}</td>
+        <td>${r.Model}</td>
+        <td>${r.Colorway}</td>
+        <td>${r.ReleaseDate || '—'}</td>
+      </tr>`).join('');
+  }
+
+  document.getElementById('unsafeForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const params = new URLSearchParams({
+      brand:    document.getElementById('u_brand').value,
+      model:    document.getElementById('u_model').value,
+      colorway: document.getElementById('u_colorway').value,
+    });
+    const res  = await fetch('/api/sneaker-search/unsafe?' + params);
+    const data = await res.json();
+    document.getElementById('unsafeQuery').textContent = data.query || '(no query)';
+    renderRows(data, 'unsafeBody', 'unsafeCount');
+  });
+
+  document.getElementById('safeForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const params = new URLSearchParams({
+      brand:    document.getElementById('s_brand').value,
+      model:    document.getElementById('s_model').value,
+      colorway: document.getElementById('s_colorway').value,
+    });
+    const res  = await fetch('/api/sneaker-search/safe?' + params);
+    const data = await res.json();
+    document.getElementById('safeQuery').textContent = data.query || '(no query)';
+    renderRows(data, 'safeBody', 'safeCount');
+  });
+</script>
+</body>
+</html>
